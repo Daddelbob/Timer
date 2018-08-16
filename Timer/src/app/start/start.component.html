@@ -1,0 +1,7 @@
+<input type="number" (change)="setHours()" placeholder="hours">
+<input type="number" (change)="setMinutes()" placeholder="minutes">
+<input type="number" (change)="setSeconds()" placeholder="seconds">
+<p>
+  {{ time | timer }}
+</p>
+<input type="button" (click)="start()" value="start">
