@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./start.component.css']
 })
 export class StartComponent implements OnInit {
+  public hours = null;
+  public minutes = null;
+  public seconds = null;
   public time = 0;
   public countingUp = true;
   public selectedCountMode = 'countDown';
-  public selectedTotalSeconds = 5;
+  public selectedTotalSeconds = 0;
 
   public nightMode = false;
   public minBrightness = 1;
@@ -23,34 +26,35 @@ export class StartComponent implements OnInit {
   ngOnInit() {}
 
   tick() {
-    console.log(this.selectedBrightness);
     if (this.time < this.selectedTotalSeconds) {
       this.time++;
     } else {
       clearInterval(this.timer);
     }
-    console.log('hi', this.time);
+    console.log('', this.time);
   }
 
   start() {
     this.timer = setInterval(() => this.tick(), 1000);
   }
-  setHours() {}
+
+  setHours(event) {
+    console.log(this.hours);
+  }
+
   setMinutes() {}
   setSeconds() {}
 
-  toggleNightMode() {
-    // const color = document.getElementById('mydiv').style.color;
-    // const backgroundColor = document.getElementById('mydiv').style
-    //   .backgroundColor;
-    // if (color === 'black' && backgroundColor === 'white') {
-    //   document.getElementById('mydiv').style.color = 'white';
-    //   document.getElementById('mydiv').style.backgroundColor = 'black';
-    // } else {
-    //   document.getElementById('mydiv').style.color = 'black';
-    //   document.getElementById('mydiv').style.backgroundColor = 'white';
-    // }
+  calcTotalSeconds(event) {
+    console.log('this.hours', this.hours);
+    console.log('this.minutes', this.minutes);
+    console.log('this.seconds', this.seconds);
+    this.selectedTotalSeconds =
+      this.hours * 3600 + this.minutes * 60 + this.seconds;
+    console.log('this.selectedTotalSeconds', this.selectedTotalSeconds);
   }
+
+  toggleNightMode() {}
 
   adjusteNightMode(event: any) {
     this.selectedBrightness = event.value;

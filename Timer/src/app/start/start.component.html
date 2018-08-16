@@ -1,22 +1,22 @@
 <div id="mydiv">
 
   <mat-form-field class="example-full-width">
-    <input type="tel" matInput placeholder="Hours">
+    <input [(value)]="hours" (input)="setHours(hours)" type="tel" matInput placeholder="Hours">
     <mat-icon matSuffix>mode_edit</mat-icon>
   </mat-form-field>
   <mat-form-field class="example-full-width">
-    <input type="tel" matInput placeholder="Minutes">
+    <input [(value)]="minutes" (change)="setMinutes($event)" type="tel" matInput placeholder="Minutes">
     <mat-icon matSuffix>mode_edit</mat-icon>
   </mat-form-field>
   <mat-form-field class="example-full-width">
-    <input type="tel" matInput placeholder="Seconds">
+    <input [(value)]="seconds" (change)="setSeconds($event)" type="tel" matInput placeholder="Seconds">
     <mat-icon matSuffix>mode_edit</mat-icon>
   </mat-form-field>
 
   <mat-slider [min]="minBrightness" [max]="maxBrightness" [step]="brightnessStep" [value]="selectedBrightness" (input)="adjusteNightMode($event)"></mat-slider>
   <button mat-raised-button (click)="toggleNightMode()">Night Mode {{ nightMode }}</button>
   <p>
-    {{ time | timer: selectedTotalSeconds }}
+    {{ time | timer }}
   </p>
   <input type="button" (click)="start()" value="start">
 
