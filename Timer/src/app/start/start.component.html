@@ -2,6 +2,11 @@
 <input type="number" (change)="setMinutes()" placeholder="minutes">
 <input type="number" (change)="setSeconds()" placeholder="seconds">
 <p>
-  {{ time | timer }}
+  {{ time | timer: selectedTotalSeconds }}
 </p>
 <input type="button" (click)="start()" value="start">
+
+<mat-button-toggle-group name="fontStyle" [(value)]="selectedCountMode" aria-label="Font Style">
+  <mat-button-toggle value="countDown">Count Down</mat-button-toggle>
+  <mat-button-toggle value="CountUp">Count Up</mat-button-toggle>
+</mat-button-toggle-group>
