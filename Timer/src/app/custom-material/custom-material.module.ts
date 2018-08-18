@@ -8,6 +8,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonToggleModule } from '../../../node_modules/@angular/material/button-toggle';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   imports: [
@@ -19,7 +23,11 @@ import { MatButtonToggleModule } from '../../../node_modules/@angular/material/b
     MatInputModule,
     MatIconModule,
     MatSlideToggleModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatToolbarModule,
+    MatListModule
   ],
   declarations: [],
   exports: [
@@ -29,7 +37,11 @@ import { MatButtonToggleModule } from '../../../node_modules/@angular/material/b
     MatInputModule,
     MatIconModule,
     MatSlideToggleModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatToolbarModule,
+    MatListModule
   ]
 })
 export class CustomMaterialModule {}

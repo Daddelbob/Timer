@@ -1,15 +1,25 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostBinding,
+  ChangeDetectorRef,
+  OnDestroy
+} from '@angular/core';
+import { MediaMatcher } from '../../../node_modules/@angular/cdk/layout';
 
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
   styleUrls: ['./start.component.scss']
 })
-export class StartComponent implements OnInit {
+export class StartComponent implements OnDestroy {
   @HostBinding('class.indigo-pink')
   lightTheme = true;
   @HostBinding('class.indigo-pink-dark')
   darkTheme = false;
+
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
   public hours = null;
   public minutes = null;
@@ -17,21 +27,22 @@ export class StartComponent implements OnInit {
 
   public startStop = 'start';
   public countingUp = true;
+  public panelOpenState = false;
   public selectedCountMode = 'countDown';
   public selectedTotalSeconds = 0;
   public countedTotalSeconds = 0;
-
-  public nightMode = false;
-  public minBrightness = 1;
-  public maxBrightness = 255;
-  public brightnessStep = 1;
-  public selectedBrightness = 200;
   public theme = 'Light';
 
   timer: any;
-  constructor() {}
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
-  ngOnInit() {}
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
 
   tick() {
     if (this.countedTotalSeconds < this.selectedTotalSeconds) {
