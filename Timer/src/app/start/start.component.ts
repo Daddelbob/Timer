@@ -31,9 +31,9 @@ export class StartComponent implements OnDestroy {
   public disableStart = true;
 
   public startStop = 'start';
-  public countingUp = true;
+  public countingDownMode = false;
   public panelOpenState = false;
-  public selectedCountMode = 'countDown';
+  public selectedCountMode = 'countUp';
   public selectedTotalSeconds = 0;
   public countedTotalSeconds = 0;
   public theme = 'Light';
@@ -75,8 +75,7 @@ export class StartComponent implements OnDestroy {
       this.startStop = 'pause';
     } else if (
       this.startStop === 'continue' &&
-      this.selectedTotalSeconds !== 0 &&
-      this.countedTotalSeconds > 0
+      this.selectedTotalSeconds !== 0
     ) {
       // continue
       log.data('selectedTotalSeconds', this.selectedTotalSeconds);
@@ -93,8 +92,10 @@ export class StartComponent implements OnDestroy {
    * Clears the input fields and resets the Count.
    */
   clearInput() {
+    log.info('clearInput() call');
     this.hours = this.minutes = this.seconds = null;
     this.disableStart = true;
+    this.selectedTotalSeconds = 0;
     this.resetCount();
   }
 
@@ -102,6 +103,7 @@ export class StartComponent implements OnDestroy {
    * Resets the currentCountedSeconds to zero, clears the Ticker and refreshes the options to restart the Timer
    */
   resetCount() {
+    log.info('resetCount() call');
     this.countedTotalSeconds = 0;
     clearInterval(this.timer);
     this.startStop = 'start';
@@ -150,6 +152,7 @@ export class StartComponent implements OnDestroy {
    * Toggles Night- and Day-Mode to provide a more enjoyable view.
    */
   toggleNightMode() {
+    log.info('toggleNightMode() call');
     if (this.theme === 'Light') {
       this.lightTheme = false;
       this.darkTheme = true;
@@ -159,5 +162,10 @@ export class StartComponent implements OnDestroy {
       this.lightTheme = true;
       this.theme = 'Light';
     }
+  }
+
+  toggleCountingDown() {
+    log.info('toggleCountingDown() call');
+    this.countingDownMode = !this.countingDownMode;
   }
 }

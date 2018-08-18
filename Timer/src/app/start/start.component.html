@@ -5,7 +5,7 @@
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <h1 class="example-app-name">Responsive App</h1>
+    <h1 class="example-app-name">Responsive Timer App</h1>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
@@ -39,15 +39,16 @@
 
 
       <p class="time">
-        {{ countedTotalSeconds | timer }}
+        {{ countedTotalSeconds | timer:selectedTotalSeconds:countingDownMode }}
       </p>
 
       <button mat-raised-button (click)="toggleStartStop()" [disabled]="disableStart">{{ startStop }}</button>
+      <button mat-raised-button (click)="resetCount()">reset</button>
 
 
       <mat-button-toggle-group name="fontStyle" [(value)]="selectedCountMode" aria-label="Font Style">
-        <mat-button-toggle value="countDown">Count Down</mat-button-toggle>
-        <mat-button-toggle value="CountUp">Count Up</mat-button-toggle>
+        <mat-button-toggle value="countUp" (change)="toggleCountingDown()">Count Up</mat-button-toggle>
+        <mat-button-toggle value="countDown" (change)="toggleCountingDown()">Count Down</mat-button-toggle>
       </mat-button-toggle-group>
 
       <mat-divider></mat-divider>
