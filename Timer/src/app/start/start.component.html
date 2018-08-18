@@ -19,26 +19,26 @@
 
     <mat-sidenav-content>
       <mat-form-field class="example-full-width">
-        <input [(ngModel)]="hours" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Hours">
+        <input [(ngModel)]="hours" (input)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Hours">
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input [(ngModel)]="minutes" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Minutes">
+        <input [(ngModel)]="minutes" (input)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Minutes">
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input [(ngModel)]="seconds" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Seconds">
+        <input [(ngModel)]="seconds" (input)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Seconds">
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
 
       <mat-divider></mat-divider>
 
 
-      <p>
+      <p class="time">
         {{ countedTotalSeconds | timer }}
       </p>
 
-      <button mat-raised-button (click)="toggleStartStop()">{{ startStop }}</button>
+      <button mat-raised-button (click)="toggleStartStop()" [disabled]="disableStart">{{ startStop }}</button>
       <button mat-raised-button (click)="resetCount()">reset</button>
 
       <mat-button-toggle-group name="fontStyle" [(value)]="selectedCountMode" aria-label="Font Style">

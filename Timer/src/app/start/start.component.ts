@@ -6,6 +6,10 @@ import {
   OnDestroy
 } from '@angular/core';
 import { MediaMatcher } from '../../../node_modules/@angular/cdk/layout';
+import { Log } from 'ng2-logger/client';
+
+const log = Log.create('Component: StartComponent');
+log.color = 'blue';
 
 @Component({
   selector: 'app-start',
@@ -24,6 +28,7 @@ export class StartComponent implements OnDestroy {
   public hours = null;
   public minutes = null;
   public seconds = null;
+  public disableStart = true;
 
   public startStop = 'start';
   public countingUp = true;
@@ -49,37 +54,47 @@ export class StartComponent implements OnDestroy {
       this.countedTotalSeconds++;
       if (this.countedTotalSeconds === this.selectedTotalSeconds) {
         clearInterval(this.timer);
-        this.toggleStartStop();
+        this.startStop = 'start';
       }
     } else {
       clearInterval(this.timer);
       this.toggleStartStop();
     }
-    console.log('', this.countedTotalSeconds);
+    log.data('', this.countedTotalSeconds);
   }
 
   toggleStartStop() {
-    console.log('toggleStartStop() call');
+    log.info('toggleStartStop() call');
     if (this.startStop === 'start' && this.selectedTotalSeconds !== 0) {
-      console.log('selectedTotalSeconds', this.selectedTotalSeconds);
+      // start & restart
+      log.data('selectedTotalSeconds', this.selectedTotalSeconds);
+      this.countedTotalSeconds = 0;
       this.timer = setInterval(() => this.tick(), 1000);
-      this.startStop = 'stop';
-    } else if (this.startStop === 'stop') {
+      this.startStop = 'pause';
+    } else if (
+      this.startStop === 'continue' &&
+      this.selectedTotalSeconds !== 0 &&
+      this.countedTotalSeconds > 0
+    ) {
+      // continue
+      log.data('selectedTotalSeconds', this.selectedTotalSeconds);
+      this.timer = setInterval(() => this.tick(), 1000);
+      this.startStop = 'pause';
+    } else if (this.startStop === 'pause') {
+      // continue
       clearInterval(this.timer);
-      this.startStop = 'start';
+      this.startStop = 'continue';
     }
   }
 
   resetCount() {
     this.countedTotalSeconds = 0;
-    if (this.startStop === 'stop') {
-      clearInterval(this.timer);
-      this.startStop = 'start';
-    }
+    clearInterval(this.timer);
+    this.startStop = 'start';
   }
 
   calcTotalSeconds() {
-    console.log('calcTotalSeconds() call');
+    log.info('calcTotalSeconds() call');
     if (this.hours < 0) {
       this.hours = 0;
     }
@@ -100,6 +115,13 @@ export class StartComponent implements OnDestroy {
     this.hours = remainingFullHours;
     this.minutes = remainingFullMinutes;
     this.seconds = remainingSplittedSeconds;
+
+    if (this.selectedTotalSeconds === 0) {
+      this.hours = this.minutes = this.seconds = null;
+      this.disableStart = true;
+    } else {
+      this.disableStart = false;
+    }
   }
 
   toggleNightMode() {
