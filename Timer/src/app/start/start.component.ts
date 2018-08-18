@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
-  styleUrls: ['./start.component.css']
+  styleUrls: ['./start.component.scss']
 })
 export class StartComponent implements OnInit {
   public hours = null;
@@ -19,6 +19,12 @@ export class StartComponent implements OnInit {
   public maxBrightness = 255;
   public brightnessStep = 1;
   public selectedBrightness = 200;
+
+  @HostBinding('class.indigo-pink')
+  lightTheme = true;
+  @HostBinding('class.indigo-pink-dark')
+  darkTheme = false;
+  theme = 'Light';
 
   timer: any;
   constructor() {}
@@ -70,5 +76,19 @@ export class StartComponent implements OnInit {
     this.seconds = remainingSplittedSeconds;
   }
 
-  toggleNightMode() {}
+  toggleNightMode() {
+    const appRoot = document.getElementsByTagName('app-root')[0];
+
+    if (this.theme === 'Light') {
+      this.lightTheme = false;
+      this.darkTheme = true;
+      this.theme = 'Dark';
+      // appRoot.setAttribute('class', 'indigo-pink-dark');
+    } else {
+      this.darkTheme = false;
+      this.lightTheme = true;
+      this.theme = 'Light';
+      // appRoot.setAttribute('class', 'indigo-pink');
+    }
+  }
 }
