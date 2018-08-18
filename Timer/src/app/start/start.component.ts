@@ -6,25 +6,27 @@ import { Component, OnInit, HostBinding } from '@angular/core';
   styleUrls: ['./start.component.scss']
 })
 export class StartComponent implements OnInit {
+  @HostBinding('class.indigo-pink')
+  lightTheme = true;
+  @HostBinding('class.indigo-pink-dark')
+  darkTheme = false;
+
   public hours = null;
   public minutes = null;
   public seconds = null;
-  public time = 0;
+
+  public startStop = 'start';
   public countingUp = true;
   public selectedCountMode = 'countDown';
   public selectedTotalSeconds = 0;
+  public countedTotalSeconds = 0;
 
   public nightMode = false;
   public minBrightness = 1;
   public maxBrightness = 255;
   public brightnessStep = 1;
   public selectedBrightness = 200;
-
-  @HostBinding('class.indigo-pink')
-  lightTheme = true;
-  @HostBinding('class.indigo-pink-dark')
-  darkTheme = false;
-  theme = 'Light';
+  public theme = 'Light';
 
   timer: any;
   constructor() {}
@@ -36,19 +38,39 @@ export class StartComponent implements OnInit {
     console.log('minutes', this.minutes);
     console.log('hours', this.hours);
     console.log('selectedTotalSeconds', this.selectedTotalSeconds);
-    if (this.time < this.selectedTotalSeconds) {
-      this.time++;
+    if (this.countedTotalSeconds < this.selectedTotalSeconds) {
+      this.countedTotalSeconds++;
+      if (this.countedTotalSeconds === this.selectedTotalSeconds) {
+        clearInterval(this.timer);
+        this.toggleStartStop();
+      }
     } else {
       clearInterval(this.timer);
+      this.toggleStartStop();
     }
-    console.log('', this.time);
+    console.log('', this.countedTotalSeconds);
   }
 
-  start() {
-    this.timer = setInterval(() => this.tick(), 1000);
+  toggleStartStop() {
+    console.log('toggleStartStop() call');
+    if (this.startStop === 'start' && this.selectedTotalSeconds !== 0) {
+      this.timer = setInterval(() => this.tick(), 1000);
+      this.startStop = 'stop';
+    } else if (this.startStop === 'stop') {
+      clearInterval(this.timer);
+      this.startStop = 'start';
+    }
   }
 
-  setHours(event) {
+  resetCount() {
+    this.countedTotalSeconds = 0;
+    if (this.startStop === 'stop') {
+      clearInterval(this.timer);
+      this.startStop = 'start';
+    }
+  }
+
+  setHours() {
     console.log(this.hours);
     this.calcTotalSeconds();
   }
@@ -83,12 +105,10 @@ export class StartComponent implements OnInit {
       this.lightTheme = false;
       this.darkTheme = true;
       this.theme = 'Dark';
-      // appRoot.setAttribute('class', 'indigo-pink-dark');
     } else {
       this.darkTheme = false;
       this.lightTheme = true;
       this.theme = 'Light';
-      // appRoot.setAttribute('class', 'indigo-pink');
     }
   }
 }
