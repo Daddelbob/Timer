@@ -34,10 +34,6 @@ export class StartComponent implements OnInit {
   ngOnInit() {}
 
   tick() {
-    console.log('seconds', this.seconds);
-    console.log('minutes', this.minutes);
-    console.log('hours', this.hours);
-    console.log('selectedTotalSeconds', this.selectedTotalSeconds);
     if (this.countedTotalSeconds < this.selectedTotalSeconds) {
       this.countedTotalSeconds++;
       if (this.countedTotalSeconds === this.selectedTotalSeconds) {
@@ -54,6 +50,7 @@ export class StartComponent implements OnInit {
   toggleStartStop() {
     console.log('toggleStartStop() call');
     if (this.startStop === 'start' && this.selectedTotalSeconds !== 0) {
+      console.log('selectedTotalSeconds', this.selectedTotalSeconds);
       this.timer = setInterval(() => this.tick(), 1000);
       this.startStop = 'stop';
     } else if (this.startStop === 'stop') {
@@ -70,22 +67,18 @@ export class StartComponent implements OnInit {
     }
   }
 
-  setHours() {
-    console.log(this.hours);
-    this.calcTotalSeconds();
-  }
-
-  setMinutes() {
-    console.log(this.minutes);
-    this.calcTotalSeconds();
-  }
-  setSeconds() {
-    console.log(this.seconds);
-    this.calcTotalSeconds();
-  }
-
   calcTotalSeconds() {
     console.log('calcTotalSeconds() call');
+    if (this.hours < 0) {
+      this.hours = 0;
+    }
+    if (this.minutes < 0) {
+      this.minutes = 0;
+    }
+    if (this.seconds < 0) {
+      this.seconds = 0;
+    }
+
     this.selectedTotalSeconds =
       this.hours * 3600 + this.minutes * 60 + this.seconds * 1;
     let remainingSplittedSeconds = this.selectedTotalSeconds;

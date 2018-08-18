@@ -1,15 +1,15 @@
 <div id="mydiv">
 
   <mat-form-field class="example-full-width">
-    <input [(ngModel)]="hours" (change)="setHours()" type="number" matInput placeholder="Hours">
+    <input [(ngModel)]="hours" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Hours">
     <mat-icon matSuffix>mode_edit</mat-icon>
   </mat-form-field>
   <mat-form-field class="example-full-width">
-    <input [(ngModel)]="minutes" (change)="setMinutes()" type="number" matInput placeholder="Minutes">
+    <input [(ngModel)]="minutes" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Minutes">
     <mat-icon matSuffix>mode_edit</mat-icon>
   </mat-form-field>
   <mat-form-field class="example-full-width">
-    <input [(ngModel)]="seconds" (change)="setSeconds()" type="number" matInput placeholder="Seconds">
+    <input [(ngModel)]="seconds" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Seconds">
     <mat-icon matSuffix>mode_edit</mat-icon>
   </mat-form-field>
 
