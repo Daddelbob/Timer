@@ -1,7 +1,5 @@
- -----------------
-
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="example-toolbar">
+  <mat-toolbar class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
@@ -18,54 +16,75 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <mat-form-field class="example-full-width">
-        <input [(ngModel)]="hours" (input)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Hours">
-        <mat-icon matSuffix>mode_edit</mat-icon>
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input [(ngModel)]="minutes" (input)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Minutes">
-        <mat-icon matSuffix>mode_edit</mat-icon>
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input [(ngModel)]="seconds" (input)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Seconds">
-        <mat-icon matSuffix>mode_edit</mat-icon>
-      </mat-form-field>
+      <div class="spacer-left-right">
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="hours" (input)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Hours">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="minutes" (input)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Minutes">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="seconds" (input)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Seconds">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
 
-      <p>
-        <button mat-raised-button (click)="clearInput()">clear input</button>
-      </p>
+        <p>
+          <button mat-raised-button (click)="clearInput()" [disabled]="disableStart">clear input</button>
+        </p>
 
-      <mat-divider></mat-divider>
-
-
-      <p class="time">
-        {{ countedTotalSeconds | timer:selectedTotalSeconds:countingDownMode }}
-      </p>
-
-      <button mat-raised-button (click)="toggleStartStop()" [disabled]="disableStart">{{ startStop }}</button>
-      <button mat-raised-button (click)="resetCount()">reset</button>
+        <mat-divider></mat-divider>
 
 
-      <mat-button-toggle-group name="fontStyle" [(value)]="selectedCountMode" aria-label="Font Style">
-        <mat-button-toggle value="countUp" (change)="toggleCountingDown()">Count Up</mat-button-toggle>
-        <mat-button-toggle value="countDown" (change)="toggleCountingDown()">Count Down</mat-button-toggle>
-      </mat-button-toggle-group>
+        <p class="time">
+          {{ countedTotalSeconds | timer:selectedTotalSeconds:countingDownMode }}
+        </p>
 
-      <mat-divider></mat-divider>
+        <button mat-raised-button (click)="toggleStartStop()" [disabled]="disableStart">{{ startStop }}</button>
+        <button mat-raised-button (click)="resetCount()" [disabled]="disableStart">reset</button>
 
-      <mat-accordion>
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <b>Data</b>
-            </mat-panel-title>
-            <mat-panel-description>
-              {{ panelOpenState ? 'hide' : 'open' }}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p>I'm visible because I am open</p>
-        </mat-expansion-panel>
-      </mat-accordion>
+        <div class="big-divider-space"></div>
+
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>Options</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ panelOpenState ? 'hide' : 'open' }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-divider class="option"></mat-divider>
+
+            <div class="option">
+              <mat-button-toggle-group name="fontStyle" [(value)]="selectedCountMode" (change)="toggleCountingDown()" aria-label="Font Style">
+                <mat-button-toggle value="countUp">Count Up</mat-button-toggle>
+                <mat-button-toggle value="countDown">Count Down</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <mat-divider class="option"></mat-divider>
+
+            <div class="option">
+              Night Mode
+              <mat-slide-toggle (change)="toggleNightMode()"></mat-slide-toggle>
+            </div>
+            <mat-divider class="option"></mat-divider>
+
+            <div class="option">
+              <mat-button-toggle-group name="fontStyle" [vertical]=true [(value)]="chosenAlarmSound" (change)="selectAlarm(chosenAlarmSound)" aria-label="Font Style">
+                <mat-button-toggle value="bed-alarm">Bed Alarm</mat-button-toggle>
+                <mat-button-toggle value="cuckoo-bird">Cuckoo Bird</mat-button-toggle>
+                <mat-button-toggle value="old-phone">Old Phone</mat-button-toggle>
+                <mat-button-toggle value="twin-bell">Twinn Bell</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <mat-divider class="option"></mat-divider>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

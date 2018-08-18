@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   HostBinding,
   ChangeDetectorRef,
   OnDestroy
@@ -8,6 +7,8 @@ import {
 import { MediaMatcher } from '../../../node_modules/@angular/cdk/layout';
 import { Log } from 'ng2-logger/client';
 
+const basePath = '../../assets/audio/';
+const extension = '.mp3';
 const log = Log.create('Component: StartComponent');
 log.color = 'blue';
 
@@ -25,9 +26,9 @@ export class StartComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
-  public hours = null;
-  public minutes = null;
-  public seconds = null;
+  public hours: number = null;
+  public minutes: number = null;
+  public seconds: number = null;
   public disableStart = true;
 
   public startStop = 'start';
@@ -37,6 +38,9 @@ export class StartComponent implements OnDestroy {
   public selectedTotalSeconds = 0;
   public countedTotalSeconds = 0;
   public theme = 'Light';
+
+  public chosenAlarmSound = 'bed-alarm';
+  public chosenAlarm = new Audio(basePath + this.chosenAlarmSound + extension);
 
   timer: any;
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
@@ -58,6 +62,7 @@ export class StartComponent implements OnDestroy {
     if (this.countedTotalSeconds >= this.selectedTotalSeconds) {
       clearInterval(this.timer);
       this.startStop = 'start';
+      this.playAlarm();
     }
     log.data('', this.countedTotalSeconds);
   }
@@ -119,6 +124,7 @@ export class StartComponent implements OnDestroy {
    */
   calcTotalSeconds() {
     log.info('calcTotalSeconds() call');
+    this.resetCount();
     if (this.hours < 0) {
       this.hours = 0;
     }
@@ -167,5 +173,16 @@ export class StartComponent implements OnDestroy {
   toggleCountingDown() {
     log.info('toggleCountingDown() call');
     this.countingDownMode = !this.countingDownMode;
+  }
+
+  selectAlarm(alarm: string) {
+    log.info('selectAlarm() call');
+    const path: string = '' + basePath + alarm + extension;
+    this.chosenAlarm = new Audio(path);
+    this.chosenAlarm.load();
+  }
+
+  playAlarm() {
+    this.chosenAlarm.play();
   }
 }
