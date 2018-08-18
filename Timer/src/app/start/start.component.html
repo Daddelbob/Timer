@@ -31,6 +31,10 @@
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
 
+      <p>
+        <button mat-raised-button (click)="clearInput()">clear input</button>
+      </p>
+
       <mat-divider></mat-divider>
 
 
@@ -39,7 +43,7 @@
       </p>
 
       <button mat-raised-button (click)="toggleStartStop()" [disabled]="disableStart">{{ startStop }}</button>
-      <button mat-raised-button (click)="resetCount()">reset</button>
+
 
       <mat-button-toggle-group name="fontStyle" [(value)]="selectedCountMode" aria-label="Font Style">
         <mat-button-toggle value="countDown">Count Down</mat-button-toggle>

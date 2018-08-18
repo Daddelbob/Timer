@@ -49,20 +49,22 @@ export class StartComponent implements OnDestroy {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
+  /**
+   * If the selected lap time is not reached yet, the Ticker will add another second to the currentCountedSeconds.
+   * If the selected lap time is reached, the Ticker will cancel the Timer.
+   */
   tick() {
-    if (this.countedTotalSeconds < this.selectedTotalSeconds) {
-      this.countedTotalSeconds++;
-      if (this.countedTotalSeconds === this.selectedTotalSeconds) {
-        clearInterval(this.timer);
-        this.startStop = 'start';
-      }
-    } else {
+    this.countedTotalSeconds++;
+    if (this.countedTotalSeconds >= this.selectedTotalSeconds) {
       clearInterval(this.timer);
-      this.toggleStartStop();
+      this.startStop = 'start';
     }
     log.data('', this.countedTotalSeconds);
   }
 
+  /**
+   * Sets the options start / pause / continue depending on a running Ticker and total Input not zero
+   */
   toggleStartStop() {
     log.info('toggleStartStop() call');
     if (this.startStop === 'start' && this.selectedTotalSeconds !== 0) {
@@ -87,12 +89,32 @@ export class StartComponent implements OnDestroy {
     }
   }
 
+  /**
+   * Clears the input fields and resets the Count.
+   */
+  clearInput() {
+    this.hours = this.minutes = this.seconds = null;
+    this.disableStart = true;
+    this.resetCount();
+  }
+
+  /**
+   * Resets the currentCountedSeconds to zero, clears the Ticker and refreshes the options to restart the Timer
+   */
   resetCount() {
     this.countedTotalSeconds = 0;
     clearInterval(this.timer);
     this.startStop = 'start';
   }
 
+  /**
+   * Calculates the input Hours, Minutes and Seconds to the actual Time for a lap.
+   * For example: inputted "1 hour, 62 minutes and 121 seconds" reslut in calculated "2 hours, 3 minutes and 1 second".
+   * Furthermore the total hours, minutes and seconds are cummulated to total-Seconds
+   * which are used by the DOM pipe to display the ISOString.
+   *
+   * If there is no input at all, the start-option is disabled.
+   */
   calcTotalSeconds() {
     log.info('calcTotalSeconds() call');
     if (this.hours < 0) {
@@ -124,9 +146,10 @@ export class StartComponent implements OnDestroy {
     }
   }
 
+  /**
+   * Toggles Night- and Day-Mode to provide a more enjoyable view.
+   */
   toggleNightMode() {
-    const appRoot = document.getElementsByTagName('app-root')[0];
-
     if (this.theme === 'Light') {
       this.lightTheme = false;
       this.darkTheme = true;
