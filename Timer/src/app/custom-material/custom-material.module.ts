@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonToggleModule } from '../../../node_modules/@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
@@ -15,7 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatSliderModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatSlideToggleModule
   ],
   declarations: [],
   exports: [
@@ -23,7 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatSliderModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatSlideToggleModule
   ]
 })
 export class CustomMaterialModule {}

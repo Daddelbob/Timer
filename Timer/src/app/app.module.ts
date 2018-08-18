@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -8,19 +9,16 @@ import { StartComponent } from './start/start.component';
 import { SharedModule } from './shared/shared.module';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    StartComponent
-  ],
+  declarations: [AppComponent, StartComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    CustomMaterialModule
+    CustomMaterialModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

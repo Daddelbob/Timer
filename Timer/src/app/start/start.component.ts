@@ -26,6 +26,10 @@ export class StartComponent implements OnInit {
   ngOnInit() {}
 
   tick() {
+    console.log('seconds', this.seconds);
+    console.log('minutes', this.minutes);
+    console.log('hours', this.hours);
+    console.log('selectedTotalSeconds', this.selectedTotalSeconds);
     if (this.time < this.selectedTotalSeconds) {
       this.time++;
     } else {
@@ -40,29 +44,31 @@ export class StartComponent implements OnInit {
 
   setHours(event) {
     console.log(this.hours);
+    this.calcTotalSeconds();
   }
 
-  setMinutes() {}
-  setSeconds() {}
+  setMinutes() {
+    console.log(this.minutes);
+    this.calcTotalSeconds();
+  }
+  setSeconds() {
+    console.log(this.seconds);
+    this.calcTotalSeconds();
+  }
 
-  calcTotalSeconds(event) {
-    console.log('this.hours', this.hours);
-    console.log('this.minutes', this.minutes);
-    console.log('this.seconds', this.seconds);
+  calcTotalSeconds() {
+    console.log('calcTotalSeconds() call');
     this.selectedTotalSeconds =
-      this.hours * 3600 + this.minutes * 60 + this.seconds;
-    console.log('this.selectedTotalSeconds', this.selectedTotalSeconds);
+      this.hours * 3600 + this.minutes * 60 + this.seconds * 1;
+    let remainingSplittedSeconds = this.selectedTotalSeconds;
+    const remainingFullHours = Math.floor(remainingSplittedSeconds / 3600);
+    remainingSplittedSeconds -= remainingFullHours * 3600;
+    const remainingFullMinutes = Math.floor(remainingSplittedSeconds / 60);
+    remainingSplittedSeconds -= remainingFullMinutes * 60;
+    this.hours = remainingFullHours;
+    this.minutes = remainingFullMinutes;
+    this.seconds = remainingSplittedSeconds;
   }
 
   toggleNightMode() {}
-
-  adjusteNightMode(event: any) {
-    this.selectedBrightness = event.value;
-    document.getElementById('mydiv').style.color = `rgb(${256 -
-      this.selectedBrightness}, ${256 - this.selectedBrightness}, ${256 -
-      this.selectedBrightness})`;
-    document.getElementById('mydiv').style.backgroundColor = `rgb(${
-      this.selectedBrightness
-    }, ${this.selectedBrightness}, ${this.selectedBrightness})`;
-  }
 }
