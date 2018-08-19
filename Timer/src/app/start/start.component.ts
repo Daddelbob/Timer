@@ -137,13 +137,12 @@ export class StartComponent implements OnDestroy {
 
     this.selectedTotalSeconds =
       this.hours * 3600 + this.minutes * 60 + this.seconds * 1;
+
     let remainingSplittedSeconds = this.selectedTotalSeconds;
-    const remainingFullHours = Math.floor(remainingSplittedSeconds / 3600);
-    remainingSplittedSeconds -= remainingFullHours * 3600;
-    const remainingFullMinutes = Math.floor(remainingSplittedSeconds / 60);
-    remainingSplittedSeconds -= remainingFullMinutes * 60;
-    this.hours = remainingFullHours;
-    this.minutes = remainingFullMinutes;
+    this.hours = Math.floor(remainingSplittedSeconds / 3600);
+    remainingSplittedSeconds -= this.hours * 3600;
+    this.minutes = Math.floor(remainingSplittedSeconds / 60);
+    remainingSplittedSeconds -= this.minutes * 60;
     this.seconds = remainingSplittedSeconds;
 
     if (this.selectedTotalSeconds === 0) {
