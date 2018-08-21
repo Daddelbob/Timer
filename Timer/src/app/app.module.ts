@@ -9,18 +9,21 @@ import { AppComponent } from './app.component';
 import { StartComponent } from './start/start.component';
 import { SharedModule } from './shared/shared.module';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
+import { HttpClientModule } from '../../node_modules/@angular/common/http';
+import { GoogleAnalyticsService } from './analytics/google-analytics.service';
 
 @NgModule({
   declarations: [AppComponent, StartComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     SharedModule,
     CustomMaterialModule,
     FormsModule,
     LayoutModule
   ],
-  providers: [],
+  providers: [GoogleAnalyticsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

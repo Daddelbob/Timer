@@ -41,8 +41,15 @@
           {{ countedTotalSeconds | timer:selectedTotalSeconds:countingDownMode }}
         </p>
 
-        <button mat-raised-button (click)="toggleStartStop()" [disabled]="disableStart">{{ startStop }}</button>
-        <button mat-raised-button (click)="resetCount()" [disabled]="disableStart">reset</button>
+        <button mat-raised-button (click)="toggleStartStop(); ga.toggleStartStop($event)" [disabled]="disableStart">{{ startStop }}</button>
+        <button mat-raised-button (click)="resetCount(); ga.toggleReset($event)" [disabled]="disableStart">reset</button>
+
+        <!-- Toggle Lap Seconds
+        <mat-slide-toggle (change)="toggleLapSeconds()"></mat-slide-toggle>
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="lapSeconds" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Seconds">
+          <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field> -->
 
         <div class="big-divider-space"></div>
 
@@ -59,7 +66,8 @@
             <mat-divider class="option"></mat-divider>
 
             <div class="option">
-              <mat-button-toggle-group name="fontStyle" [(value)]="selectedCountMode" (change)="toggleCountingDown()" aria-label="Font Style">
+              <mat-button-toggle-group name="fontStyle" [(value)]="selectedCountMode" (change)="toggleCountingUpDown(); ga.toggleCountingUpDown(countingDownMode);"
+                aria-label="Font Style">
                 <mat-button-toggle value="countUp">Count Up</mat-button-toggle>
                 <mat-button-toggle value="countDown">Count Down</mat-button-toggle>
               </mat-button-toggle-group>
@@ -68,7 +76,7 @@
 
             <div class="option">
               Night Mode
-              <mat-slide-toggle (change)="toggleNightMode()"></mat-slide-toggle>
+              <mat-slide-toggle (change)="toggleNightMode(); ga.toggleNightMode(theme);"></mat-slide-toggle>
             </div>
             <mat-divider class="option"></mat-divider>
 

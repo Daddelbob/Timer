@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { MediaMatcher } from '../../../node_modules/@angular/cdk/layout';
 import { Log } from 'ng2-logger/client';
+import { GoogleAnalyticsService } from '../analytics/google-analytics.service';
 
 const basePath = '../../assets/audio/';
 const extension = '.mp3';
@@ -39,11 +40,17 @@ export class StartComponent implements OnDestroy {
   public countedTotalSeconds = 0;
   public theme = 'Light';
 
+  public lapSeconds = 0;
+
   public chosenAlarmSound = 'bed-alarm';
   public chosenAlarm = new Audio(basePath + this.chosenAlarmSound + extension);
 
   timer: any;
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher,
+    public ga: GoogleAnalyticsService
+  ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -66,6 +73,8 @@ export class StartComponent implements OnDestroy {
     }
     log.data('', this.countedTotalSeconds);
   }
+
+  toggleLapSeconds() {}
 
   /**
    * Sets the options start / pause / continue depending on a running Ticker and total Input not zero
@@ -169,7 +178,7 @@ export class StartComponent implements OnDestroy {
     }
   }
 
-  toggleCountingDown() {
+  toggleCountingUpDown() {
     log.info('toggleCountingDown() call');
     this.countingDownMode = !this.countingDownMode;
   }
@@ -182,6 +191,7 @@ export class StartComponent implements OnDestroy {
   }
 
   playAlarm() {
+    this.ga.playAlarm();
     this.chosenAlarm.play();
   }
 }
