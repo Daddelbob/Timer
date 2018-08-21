@@ -103,4 +103,31 @@ export class GoogleAnalyticsService {
       eventValue: 10
     });
   };
+
+  toggleLapSeconds = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'toggleLapSeconds',
+      eventAction: event + ' --- ' + new Date().toString(),
+      eventValue: 10
+    });
+  };
+
+  toggleUseLapSeconds = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'toggleUseLapSeconds',
+      eventAction: event + ' --- ' + new Date().toString(),
+      eventValue: 10
+    });
+  };
+
+  setLapSeconds = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'setLapSeconds',
+      eventAction: event + ' --- ' + new Date().toString(),
+      eventValue: 10
+    });
+  };
 }

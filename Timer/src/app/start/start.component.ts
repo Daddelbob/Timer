@@ -41,6 +41,7 @@ export class StartComponent implements OnDestroy {
   public theme = 'Light';
 
   public lapSeconds = 0;
+  public useLapSeconds = false;
 
   public chosenAlarmSound = 'bed-alarm';
   public chosenAlarm = new Audio(basePath + this.chosenAlarmSound + extension);
@@ -65,16 +66,20 @@ export class StartComponent implements OnDestroy {
    * If the selected lap time is reached, the Ticker will cancel the Timer.
    */
   tick() {
+    const self = this;
     this.countedTotalSeconds++;
     if (this.countedTotalSeconds >= this.selectedTotalSeconds) {
       clearInterval(this.timer);
       this.startStop = 'start';
+      if (this.useLapSeconds) {
+        setTimeout(function() {
+          self.toggleStartStop();
+        }, this.lapSeconds * 1000);
+      }
       this.playAlarm();
     }
     log.data('', this.countedTotalSeconds);
   }
-
-  toggleLapSeconds() {}
 
   /**
    * Sets the options start / pause / continue depending on a running Ticker and total Input not zero

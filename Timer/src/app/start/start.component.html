@@ -17,19 +17,18 @@
 
     <mat-sidenav-content>
       <div class="spacer-left-right">
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
           <input [(ngModel)]="hours" (change)="calcTotalSeconds(); ga.setHours(hours+':'+minutes+':'+seconds)" type="number" min="0"
             matInput placeholder="Hours">
           <mat-icon matSuffix>mode_edit</mat-icon>
         </mat-form-field>
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
           <input [(ngModel)]="minutes" (change)="calcTotalSeconds(); ga.setMinutes(hours+':'+minutes+':'+seconds)" type="number" min="0"
             matInput placeholder="Minutes">
           <mat-icon matSuffix>mode_edit</mat-icon>
         </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input [(ngModel)]="seconds" (change)="calcTotalSeconds(); ga.setSeconds('clear input')" type="number" min="0"
-            matInput placeholder="Seconds">
+        <mat-form-field>
+          <input [(ngModel)]="seconds" (change)="calcTotalSeconds(); ga.setSeconds('clear input')" type="number" min="0" matInput placeholder="Seconds">
           <mat-icon matSuffix>mode_edit</mat-icon>
         </mat-form-field>
 
@@ -39,20 +38,14 @@
 
         <mat-divider></mat-divider>
 
-
+        <div class="time-top-spacer"></div>
         <p class="time">
           {{ countedTotalSeconds | timer:selectedTotalSeconds:countingDownMode }}
         </p>
+        <div class="time-bottom-spacer"></div>
 
         <button mat-raised-button (click)="toggleStartStop(); ga.toggleStartStop(startStop)" [disabled]="disableStart">{{ startStop }}</button>
         <button mat-raised-button (click)="resetCount(); ga.toggleReset('reset')" [disabled]="disableStart">reset</button>
-
-        <!-- Toggle Lap Seconds
-        <mat-slide-toggle (change)="toggleLapSeconds()"></mat-slide-toggle>
-        <mat-form-field class="example-full-width">
-          <input [(ngModel)]="lapSeconds" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Seconds">
-          <mat-icon matSuffix>mode_edit</mat-icon>
-        </mat-form-field> -->
 
         <div class="big-divider-space"></div>
 
@@ -78,8 +71,19 @@
             <mat-divider class="option"></mat-divider>
 
             <div class="option">
-              Night Mode
               <mat-slide-toggle (change)="toggleNightMode(); ga.toggleNightMode(theme);"></mat-slide-toggle>
+              <span class="spacer-left">Night Mode</span>
+            </div>
+            <mat-divider class="option"></mat-divider>
+
+            <div class="option">
+              <mat-slide-toggle [(ngModel)]="useLapSeconds" (change)="ga.toggleUseLapSeconds(useLapSeconds);"></mat-slide-toggle>
+              <span class="spacer-left">Toggle Lap Seconds</span>
+              <br>
+              <mat-form-field class="spacer-top">
+                <input [(ngModel)]="lapSeconds" (change)="ga.setLapSeconds(lapSeconds);" type="number" min="0" matInput placeholder="Seconds">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+              </mat-form-field>
             </div>
             <mat-divider class="option"></mat-divider>
 
