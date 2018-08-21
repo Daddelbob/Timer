@@ -9,29 +9,32 @@
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
-        <div mat-list-item routerLink=".">Night Mode
+        <!-- <div mat-list-item routerLink=".">Night Mode
           <mat-slide-toggle (change)="toggleNightMode()"></mat-slide-toggle>
-        </div>
+        </div> -->
       </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
       <div class="spacer-left-right">
         <mat-form-field class="example-full-width">
-          <input [(ngModel)]="hours" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Hours">
+          <input [(ngModel)]="hours" (change)="calcTotalSeconds(); ga.setHours(hours+':'+minutes+':'+seconds)" type="number" min="0"
+            matInput placeholder="Hours">
           <mat-icon matSuffix>mode_edit</mat-icon>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input [(ngModel)]="minutes" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Minutes">
+          <input [(ngModel)]="minutes" (change)="calcTotalSeconds(); ga.setMinutes(hours+':'+minutes+':'+seconds)" type="number" min="0"
+            matInput placeholder="Minutes">
           <mat-icon matSuffix>mode_edit</mat-icon>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input [(ngModel)]="seconds" (change)="calcTotalSeconds()" type="number" min="0" matInput placeholder="Seconds">
+          <input [(ngModel)]="seconds" (change)="calcTotalSeconds(); ga.setSeconds('clear input')" type="number" min="0"
+            matInput placeholder="Seconds">
           <mat-icon matSuffix>mode_edit</mat-icon>
         </mat-form-field>
 
         <p>
-          <button mat-raised-button (click)="clearInput()" [disabled]="disableStart">clear input</button>
+          <button mat-raised-button (click)="clearInput(); ga.clearInput(hours+''+minutes+''+seconds)" [disabled]="disableStart">clear input</button>
         </p>
 
         <mat-divider></mat-divider>
@@ -41,8 +44,8 @@
           {{ countedTotalSeconds | timer:selectedTotalSeconds:countingDownMode }}
         </p>
 
-        <button mat-raised-button (click)="toggleStartStop(); ga.toggleStartStop($event)" [disabled]="disableStart">{{ startStop }}</button>
-        <button mat-raised-button (click)="resetCount(); ga.toggleReset($event)" [disabled]="disableStart">reset</button>
+        <button mat-raised-button (click)="toggleStartStop(); ga.toggleStartStop(startStop)" [disabled]="disableStart">{{ startStop }}</button>
+        <button mat-raised-button (click)="resetCount(); ga.toggleReset('reset')" [disabled]="disableStart">reset</button>
 
         <!-- Toggle Lap Seconds
         <mat-slide-toggle (change)="toggleLapSeconds()"></mat-slide-toggle>
@@ -81,7 +84,7 @@
             <mat-divider class="option"></mat-divider>
 
             <div class="option">
-              <mat-button-toggle-group name="fontStyle" [vertical]=true [(value)]="chosenAlarmSound" (change)="selectAlarm(chosenAlarmSound)"
+              <mat-button-toggle-group name="fontStyle" [vertical]=true [(value)]="chosenAlarmSound" (change)="selectAlarm(chosenAlarmSound); ga.selectAlarm(chosenAlarmSound);"
                 aria-label="Font Style">
                 <mat-button-toggle value="bed-alarm">Bed Alarm</mat-button-toggle>
                 <mat-button-toggle value="cuckoo-bird">Cuckoo Bird</mat-button-toggle>

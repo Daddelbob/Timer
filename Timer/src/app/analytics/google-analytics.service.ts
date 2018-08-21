@@ -58,4 +58,49 @@ export class GoogleAnalyticsService {
       eventValue: 10
     });
   };
+
+  clearInput = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'clearInput',
+      eventAction: event,
+      eventValue: 10
+    });
+  };
+
+  setHours = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'setHours',
+      eventAction: event,
+      eventValue: 10
+    });
+  };
+
+  setMinutes = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'setMinutes',
+      eventAction: event,
+      eventValue: 10
+    });
+  };
+
+  setSeconds = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'setSeconds',
+      eventAction: event,
+      eventValue: 10
+    });
+  };
+
+  selectAlarm = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'selectAlarm',
+      eventAction: event,
+      eventValue: 10
+    });
+  };
 }
