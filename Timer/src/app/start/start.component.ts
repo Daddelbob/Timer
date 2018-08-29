@@ -7,8 +7,7 @@ import {
 import { MediaMatcher } from '../../../node_modules/@angular/cdk/layout';
 import { Log } from 'ng2-logger/client';
 import { GoogleAnalyticsService } from '../analytics/google-analytics.service';
-import * as firebase from 'firebase'
-
+import * as firebase from 'firebase';
 
 const basePath = '../../assets/audio/';
 const extension = '.mp3';
@@ -22,9 +21,9 @@ log.color = 'blue';
 })
 export class StartComponent implements OnDestroy {
   @HostBinding('class.indigo-pink')
-  lightTheme = true;
+  lightTheme = false;
   @HostBinding('class.indigo-pink-dark')
-  darkTheme = false;
+  darkTheme = true;
 
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
@@ -40,13 +39,15 @@ export class StartComponent implements OnDestroy {
   public selectedCountMode = 'countUp';
   public selectedTotalSeconds = 0;
   public countedTotalSeconds = 0;
-  public theme = 'Light';
+  public theme = 'Dark';
 
   public lapSeconds = 0;
   public useLapSeconds = false;
 
   public chosenAlarmSound = 'bed-alarm';
   public chosenAlarm = new Audio(basePath + this.chosenAlarmSound + extension);
+
+  laghaimVisible = false;
 
   timer: any;
   constructor(
@@ -206,5 +207,11 @@ export class StartComponent implements OnDestroy {
   playAlarm() {
     this.ga.playAlarm();
     this.chosenAlarm.play();
+  }
+
+  /////// LAGHAIM
+
+  openLaghaimMode() {
+    this.laghaimVisible = true;
   }
 }

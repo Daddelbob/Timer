@@ -19,7 +19,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'toggleNightMode',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 5
     });
   };
 
@@ -28,7 +28,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'toggleStartStop',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 3
     });
   };
 
@@ -37,7 +37,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'toggleCountingUpDown',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 2
     });
   };
 
@@ -46,7 +46,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'toggleReset',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 2
     });
   };
 
@@ -55,7 +55,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'processHappens',
       eventLabel: 'playAlarm',
       eventAction: 'playAlarm' + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 2
     });
   };
 
@@ -64,7 +64,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'clearInput',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 2
     });
   };
 
@@ -73,7 +73,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'setHours',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 5
     });
   };
 
@@ -82,7 +82,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'setMinutes',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 5
     });
   };
 
@@ -91,7 +91,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'setSeconds',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 5
     });
   };
 
@@ -100,7 +100,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'selectAlarm',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 1
     });
   };
 
@@ -109,7 +109,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'toggleLapSeconds',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 1
     });
   };
 
@@ -118,7 +118,7 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'toggleUseLapSeconds',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 1
     });
   };
 
@@ -127,7 +127,16 @@ export class GoogleAnalyticsService {
       eventCategory: 'buttonClicked',
       eventLabel: 'setLapSeconds',
       eventAction: event + ' --- ' + new Date().toString(),
-      eventValue: 10
+      eventValue: 1
+    });
+  };
+
+  openLaghaimMode = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'openLaghaimMode',
+      eventAction: event + ' --- ' + new Date().toString(),
+      eventValue: 5
     });
   };
 }
