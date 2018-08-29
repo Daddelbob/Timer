@@ -5,7 +5,7 @@ import { LaghaimComponent } from './components/laghaim/laghaim.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
   declarations: [TimerPipe, LaghaimComponent],
   exports: [TimerPipe, LaghaimComponent]
