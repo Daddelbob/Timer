@@ -7,7 +7,8 @@ import {
 import { MediaMatcher } from '../../../node_modules/@angular/cdk/layout';
 import { Log } from 'ng2-logger/client';
 import { GoogleAnalyticsService } from '../analytics/google-analytics.service';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase'
+
 
 const basePath = '../../assets/audio/';
 const extension = '.mp3';
@@ -57,6 +58,11 @@ export class StartComponent implements OnDestroy {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
     // console.log(firebase.app().name);
+    const database = firebase.database();
+    database.ref('users/' + 1).set({
+      username: 'test',
+      email: 'test@test.de'
+    });
   }
 
   ngOnDestroy(): void {

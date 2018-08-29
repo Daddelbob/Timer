@@ -14,6 +14,9 @@ import { GoogleAnalyticsService } from './analytics/google-analytics.service';
 // npm install angularfire2 firebase --save
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
+import * as firebase from 'firebase'
+
+firebase.initializeApp(environment.firebase);
 
 @NgModule({
   declarations: [AppComponent, StartComponent],
