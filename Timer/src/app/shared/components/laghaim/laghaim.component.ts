@@ -13,23 +13,36 @@ const bossesPath = 'laghaim/brazil/bosses/';
   styleUrls: ['./laghaim.component.scss']
 })
 export class LaghaimComponent implements OnInit {
+  public medusa: Boss;
   constructor() {}
 
   ngOnInit() {
-    this.getBoss('Medusa');
+    this.getBoss('Medusa').then(boss => {
+      this.medusa = {
+        id: boss.id,
+        name: boss.name,
+        respawnTime: boss.respawnTime,
+        lastSlain: boss.lastSlain
+      };
+    });
   }
 
-  getBoss(boss: string) {
+  getBoss(boss: string): Promise<Boss> {
     log.info('getBoss() call');
     return firebase
       .database()
       .ref(bossesPath + boss)
       .once('value')
-      .then(function(snapshot) {
-        console.log('SNAPSHOT', snapshot);
-        const username = (snapshot.val() && snapshot.val().name) || 'Anonymous';
-        console.log('username', username);
-        return username;
+      .then(snapshot => {
+        return snapshot.val();
+        // const boss: Boss = {
+        //   id: snapshot.val().id,
+        //   name: snapshot.val().name,
+        //   respawnTime: snapshot.val().respawnTime,
+        //   lastSlain: snapshot.val().lastSlain
+        // };
+        // console.log('BOSSSSS', boss);
+        // return boss;
       });
   }
 
@@ -58,4 +71,11 @@ export class LaghaimComponent implements OnInit {
         lastSlain: new Date().getTime()
       });
   }
+}
+
+export interface Boss {
+  id: number;
+  name: string;
+  respawnTime: number;
+  lastSlain: number;
 }
