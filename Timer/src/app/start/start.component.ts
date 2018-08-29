@@ -47,7 +47,7 @@ export class StartComponent implements OnDestroy {
   public chosenAlarmSound = 'bed-alarm';
   public chosenAlarm = new Audio(basePath + this.chosenAlarmSound + extension);
 
-  laghaimVisible = false;
+  laghaimVisible = true;
 
   timer: any;
   constructor(
@@ -213,5 +213,9 @@ export class StartComponent implements OnDestroy {
 
   openLaghaimMode() {
     this.laghaimVisible = true;
+  }
+
+  openNormalMode() {
+    this.laghaimVisible = false;
   }
 }

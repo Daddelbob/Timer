@@ -139,4 +139,13 @@ export class GoogleAnalyticsService {
       eventValue: 5
     });
   };
+
+  openNormalMode = (event: any) => {
+    (<any>window).ga('send', 'event', {
+      eventCategory: 'buttonClicked',
+      eventLabel: 'openNormalMode',
+      eventAction: event + ' --- ' + new Date().toString(),
+      eventValue: 5
+    });
+  };
 }
