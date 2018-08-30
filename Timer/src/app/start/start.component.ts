@@ -49,6 +49,7 @@ export class StartComponent implements OnDestroy {
   laghaimVisible = true;
 
   timer: any;
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,

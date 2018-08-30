@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TimerPipe implements PipeTransform {
   transform(
-    countedTotalSeconds: number,
+    countedTotalSeconds= 0,
     selectedTotalSeconds: number,
     countingDownMode: boolean
   ): any {
