@@ -1,3 +1,5 @@
 <p>
-  Medusa {{ medusa?.lastSlainTimeStamp | remainingSeconds: medusa?.respawnDuration | timer }}
+  Medusa {{ medusaRemainingDeadTime | timer }}
+  <br>
+  Moul {{ moulRemainingDeadTime | timer }}
 </p>

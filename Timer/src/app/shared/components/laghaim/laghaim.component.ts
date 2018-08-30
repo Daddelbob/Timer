@@ -14,9 +14,14 @@ const bossesPath = 'laghaim/brazil/bosses/';
 })
 export class LaghaimComponent implements OnInit {
   public medusa: Boss;
+  public moul: Boss;
+  public medusaRemainingDeadTime: number;
+  public moulRemainingDeadTime: number;
+  timer: any;
   constructor() {}
 
   ngOnInit() {
+    this.timer = setInterval(() => this.tick(), 1000);
     this.getBoss('Medusa').then(boss => {
       this.medusa = {
         id: boss.id,
@@ -25,6 +30,34 @@ export class LaghaimComponent implements OnInit {
         lastSlainTimeStamp: boss.lastSlainTimeStamp
       };
     });
+
+    this.getBoss('Moul').then(boss => {
+      this.moul = {
+        id: boss.id,
+        name: boss.name,
+        respawnDuration: boss.respawnDuration,
+        lastSlainTimeStamp: boss.lastSlainTimeStamp
+      };
+    });
+  }
+
+  tick() {
+    const currentTime = new Date().getTime();
+
+    this.medusaRemainingDeadTime =
+      this.medusa.lastSlainTimeStamp +
+      this.medusa.respawnDuration * 1000 -
+      currentTime;
+    this.medusaRemainingDeadTime =
+      (this.medusaRemainingDeadTime < 0 ? 0 : this.medusaRemainingDeadTime) /
+      1000;
+
+    this.moulRemainingDeadTime =
+      this.moul.lastSlainTimeStamp +
+      this.moul.respawnDuration * 1000 -
+      currentTime;
+    this.moulRemainingDeadTime =
+      (this.moulRemainingDeadTime < 0 ? 0 : this.moulRemainingDeadTime) / 1000;
   }
 
   getBoss(boss: string): Promise<Boss> {
