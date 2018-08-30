@@ -4,17 +4,14 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'remainingSeconds'
 })
 export class RemainingSecondsPipe implements PipeTransform {
-  transform(lastSlain: number, respawnTime: number): any {
-    const currentTime = new Date().getTime() * 1000;
-    const aliveAt = lastSlain * 1000 + respawnTime;
-    const aliveIn = aliveAt - currentTime;
-    console.log('currentTime', currentTime);
-    console.log('aliveAt', currentTime);
-    console.log('aliveIn', aliveIn);
-    if (aliveIn >= 0) {
-      return aliveIn;
+  transform(lastSlainTimeStamp: number, respawnDuration: number): any {
+    const currentTime = new Date().getTime();
+    const respawnTimeStamp = lastSlainTimeStamp + respawnDuration * 1000;
+    const remainingDeadTime = respawnTimeStamp - currentTime;
+    if (remainingDeadTime >= 0) {
+      return Math.floor(remainingDeadTime / 1000);
     } else {
-      return aliveAt;
+      return 0;
     }
   }
 }

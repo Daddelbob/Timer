@@ -21,8 +21,8 @@ export class LaghaimComponent implements OnInit {
       this.medusa = {
         id: boss.id,
         name: boss.name,
-        respawnTime: boss.respawnTime,
-        lastSlain: boss.lastSlain
+        respawnDuration: boss.respawnDuration,
+        lastSlainTimeStamp: boss.lastSlainTimeStamp
       };
     });
   }
@@ -35,14 +35,6 @@ export class LaghaimComponent implements OnInit {
       .once('value')
       .then(snapshot => {
         return snapshot.val();
-        // const boss: Boss = {
-        //   id: snapshot.val().id,
-        //   name: snapshot.val().name,
-        //   respawnTime: snapshot.val().respawnTime,
-        //   lastSlain: snapshot.val().lastSlain
-        // };
-        // console.log('BOSSSSS', boss);
-        // return boss;
       });
   }
 
@@ -54,8 +46,8 @@ export class LaghaimComponent implements OnInit {
       .set({
         id: 1,
         name: 'Medusa',
-        respawnTime: 86400,
-        lastSlain: new Date().getTime()
+        respawnDuration: 86400,
+        lastSlainTimeStamp: new Date().getTime()
       });
   }
 
@@ -67,8 +59,8 @@ export class LaghaimComponent implements OnInit {
       .set({
         id: 1,
         name: 'Moul',
-        respawnTime: 3600,
-        lastSlain: new Date().getTime()
+        respawnDuration: 3600,
+        lastSlainTimeStamp: new Date().getTime()
       });
   }
 }
@@ -76,6 +68,6 @@ export class LaghaimComponent implements OnInit {
 export interface Boss {
   id: number;
   name: string;
-  respawnTime: number;
-  lastSlain: number;
+  respawnDuration: number;
+  lastSlainTimeStamp: number;
 }
