@@ -7,6 +7,7 @@ import {
 import { MediaMatcher } from '../../../node_modules/@angular/cdk/layout';
 import { Log } from 'ng2-logger/client';
 import { GoogleAnalyticsService } from '../analytics/google-analytics.service';
+import { Router } from '@angular/router';
 
 const basePath = '../../assets/audio/';
 const extension = '.mp3';
@@ -46,13 +47,14 @@ export class StartComponent implements OnDestroy {
   public chosenAlarmSound = 'bed-alarm';
   public chosenAlarm = new Audio(basePath + this.chosenAlarmSound + extension);
 
-  laghaimVisible = true;
+  laghaimVisible = false;
 
   timer: any;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
+    private router: Router,
     public ga: GoogleAnalyticsService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -154,6 +156,10 @@ export class StartComponent implements OnDestroy {
 
     this.selectedTotalSeconds =
       this.hours * 3600 + this.minutes * 60 + this.seconds * 1;
+
+    this.router.navigate(['/'], {
+      queryParams: { selectedTotalSeconds: this.selectedTotalSeconds, theme: this.theme }
+    });
 
     let remainingSplittedSeconds = this.selectedTotalSeconds;
     this.hours = Math.floor(remainingSplittedSeconds / 3600);
