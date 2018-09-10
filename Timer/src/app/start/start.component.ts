@@ -2,24 +2,31 @@ import {
   Component,
   HostBinding,
   ChangeDetectorRef,
-  OnDestroy
+  OnDestroy,
+  OnInit
 } from '@angular/core';
 import { MediaMatcher } from '../../../node_modules/@angular/cdk/layout';
 import { Log } from 'ng2-logger/client';
 import { GoogleAnalyticsService } from '../analytics/google-analytics.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Route } from '@angular/compiler/src/core';
 
 const basePath = '../../assets/audio/';
 const extension = '.mp3';
 const log = Log.create('Component: StartComponent');
 log.color = 'blue';
 
+export interface Params {
+  selectedTotalSeconds: number;
+  theme: string;
+}
+
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
   styleUrls: ['./start.component.scss']
 })
-export class StartComponent implements OnDestroy {
+export class StartComponent implements OnDestroy, OnInit {
   @HostBinding('class.indigo-pink')
   lightTheme = false;
   @HostBinding('class.indigo-pink-dark')
@@ -48,18 +55,28 @@ export class StartComponent implements OnDestroy {
   public chosenAlarm = new Audio(basePath + this.chosenAlarmSound + extension);
 
   laghaimVisible = false;
-
   timer: any;
+
+  private queryParams: Params;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     public ga: GoogleAnalyticsService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      this.selectedTotalSeconds = params.selectedTotalSeconds;
+      this.theme = params.theme;
+      log.data('Getting params', params);
+    });
   }
 
   ngOnDestroy(): void {
@@ -157,9 +174,13 @@ export class StartComponent implements OnDestroy {
     this.selectedTotalSeconds =
       this.hours * 3600 + this.minutes * 60 + this.seconds * 1;
 
-    this.router.navigate(['/'], {
-      queryParams: { selectedTotalSeconds: this.selectedTotalSeconds, theme: this.theme }
-    });
+    this.queryParams = {
+      selectedTotalSeconds: this.selectedTotalSeconds,
+      theme: this.theme
+    };
+
+    this.router.navigate(['/'], this.queryParams);
+    log.data('Setting params', this.queryParams);
 
     let remainingSplittedSeconds = this.selectedTotalSeconds;
     this.hours = Math.floor(remainingSplittedSeconds / 3600);
